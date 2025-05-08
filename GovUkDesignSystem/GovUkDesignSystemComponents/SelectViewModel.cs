@@ -5,6 +5,8 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
 {
     public class SelectViewModel : IHasErrorMessage
     {
+        public const string SELECT_PLACEHOLDER_VALUE = "select_placeholder_value";
+        
         /// <summary>
         ///     Required. The id of the select input.
         /// </summary>
