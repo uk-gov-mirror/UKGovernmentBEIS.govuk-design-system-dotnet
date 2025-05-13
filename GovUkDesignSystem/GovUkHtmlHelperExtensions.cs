@@ -542,7 +542,7 @@ namespace GovUkDesignSystem
             Dictionary<string, string> attributeOptions = null,
             Dictionary<string, Dictionary<string, string>> itemAttributeOptions = null,
             Dictionary<string, bool> disabledOptions = null,
-            string placeHolder = null,
+            PlaceholderViewModel placeHolderOptions = null,
             string idPrefix = null)
             where TModel : class
         {
@@ -558,7 +558,7 @@ namespace GovUkDesignSystem
                 attributeOptions,
                 itemAttributeOptions,
                 disabledOptions,
-                placeHolder,
+                placeHolderOptions,
                 idPrefix);
         }
 

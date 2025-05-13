@@ -24,7 +24,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             Dictionary<string, string> attributeOptions = null,
             Dictionary<string, Dictionary<string, string>> itemAttributeOptions = null,
             Dictionary<string, bool> disabledOptions = null,
-            string placeHolder = null,
+            PlaceholderViewModel placeHolderOptions = null,
             string idPrefix = null)
             where TModel : class
         {
@@ -37,12 +37,12 @@ namespace GovUkDesignSystem.HtmlGenerators
 
             List<SelectItemViewModel> selectItems = [];
 
-            if (placeHolder != null)
+            if (placeHolderOptions != null)
             {
                 selectItems.Add(new SelectItemViewModel
                     {
-                        Value = SelectViewModel.SELECT_PLACEHOLDER_VALUE,
-                        Text = placeHolder,
+                        Value = placeHolderOptions.Value,
+                        Text = placeHolderOptions.Text,
                         Selected = selectedValue == null,
                     });
             }
