@@ -8,20 +8,33 @@ namespace GovUkDesignSystem.ModelBinders;
 
 /// <summary>
 /// Binder used to specify a placeholder value on a view model.
-/// When combined with <see cref="GovUkDataBindingExpectedPlaceholderAttribute"/> it will bind the value as `null` if the specified placeholder is submitted.
-/// Useful for placeholders in select inputs in conjunction with requirement checks, null will be interpreted as not submitted in validators.
+/// When the binded value equals the placeholder, the value will be instead bound as <c>null</c>. This can be interpreted as not present by validators.
+/// See <see cref="DefaultPlaceholder"/> for the default placeholder value this binder is expecting.
+/// <br/>
+/// If desired for the page markup, there is the option to specify a custom placeholder value. As we cannot pass arguments to the binder, an additional attribute must be added to the view model property. For example:
+/// <code>
+/// [ModelBinder(typeof(GovUkValueWithPlaceholderBinder))]
+/// [GovUkDataBindingExpectedPlaceholder("expected placeholder value")]
+/// public string SelectedAddressIndex { get; set; }
+/// </code>
+/// You must also register a provider for this attribute in the startup of your app if using a custom placeholder, for instance in <c>Startup.cs</c>
+/// <code>
+/// services.AddControllersWithViews(options =>
+/// {
+///     options.ModelMetadataDetailsProviders.Add(new GovUkDataBindingExpectedPlaceholderProvider());
+///     ...
+/// })
+/// </code>
 /// </summary>
 public class GovUkValueWithPlaceholderBinder : IModelBinder
 {
+    public const string DefaultPlaceholder = "choose";
+
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
         var placeholderAttribute = bindingContext.ModelMetadata.ValidatorMetadata
             .OfType<GovUkDataBindingExpectedPlaceholderAttribute>().SingleOrDefault();
-        if (placeholderAttribute == null)
-        {
-            throw new Exception(
-                "When using the GovUkValueWithPlaceholderBinder you must also provide a GovUkDataBindingExpectedPlaceholderAttribute attribute and ensure that you register GovUkDataBindingExpectedPlaceholderProvider in your application's Startup.ConfigureServices method.");
-        }
+        var placeHolder = placeholderAttribute?.Placeholder ?? DefaultPlaceholder;
 
         var valueProviderResult = bindingContext.ValueProvider.GetValue(bindingContext.ModelName);
         if (valueProviderResult == ValueProviderResult.None)
@@ -31,7 +44,7 @@ public class GovUkValueWithPlaceholderBinder : IModelBinder
 
         var value = valueProviderResult.FirstValue;
 
-        bindingContext.Result = ModelBindingResult.Success(value == placeholderAttribute.Placeholder ? null : value);
+        bindingContext.Result = ModelBindingResult.Success(value == placeHolder ? null : value);
 
         return Task.CompletedTask;
     }

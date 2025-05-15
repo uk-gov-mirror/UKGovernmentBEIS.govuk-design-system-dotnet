@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using GovUkDesignSystem.ModelBinders;
 
 namespace GovUkDesignSystem.HtmlGenerators
 {
@@ -41,7 +42,7 @@ namespace GovUkDesignSystem.HtmlGenerators
             {
                 selectItems.Add(new SelectItemViewModel
                     {
-                        Value = placeHolderOptions.Value,
+                        Value = placeHolderOptions.Value ?? GovUkValueWithPlaceholderBinder.DefaultPlaceholder,
                         Text = placeHolderOptions.Text,
                         Selected = selectedValue == null,
                     });
