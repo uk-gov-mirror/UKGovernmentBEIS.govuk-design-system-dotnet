@@ -8,11 +8,11 @@ namespace GovUkDesignSystem.ModelBinders
     /// This class ensures that any attributes required by the GovUk custom model binders are available in the binding
     /// context's ValidatorMetadata property.
     /// </summary>
-    public class GovUkDataBindingExpectedPlaceholderProvider : IValidationMetadataProvider
+    public class GovUkDataBindingExpectPlaceholderProvider : IValidationMetadataProvider
     {
         public void CreateValidationMetadata(ValidationMetadataProviderContext context)
         {        
-            var attribute = context.Attributes.OfType<GovUkDataBindingExpectedPlaceholderAttribute>().SingleOrDefault();
+            var attribute = context.Attributes.OfType<GovUkDataBindingExpectPlaceholderAttribute>().SingleOrDefault();
             if (attribute != null)
             {
                 context.ValidationMetadata.ValidatorMetadata.Add(attribute);
