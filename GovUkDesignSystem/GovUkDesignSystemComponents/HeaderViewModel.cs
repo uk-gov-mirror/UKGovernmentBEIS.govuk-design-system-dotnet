@@ -17,13 +17,6 @@ namespace GovUkDesignSystem.GovUkDesignSystemComponents
         public string AssetsPath { get; set; }
 
         /// <summary>
-        ///     Product name, used when the product name follows on directly from ‘GOV.UK’.
-        ///     For example, GOV.UK Pay or GOV.UK Design System.
-        ///     In most circumstances, you should use serviceName.
-        /// </summary>
-        public string ProductName { get; set; }
-
-        /// <summary>
         ///     The name of your service, included in the header.
         /// </summary>
         public string ServiceName { get; set; }
